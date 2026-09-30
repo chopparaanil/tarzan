@@ -2,20 +2,24 @@ pipeline {
   agent { label 'linux-docker' }
 
   triggers {
-    githubPush(
-      triggerOnPush: true,
-      triggerOnMergeRequest: true,
-      branchFilterType: 'All'
-    )
-  }
+        githubPush()
+    }
 
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '20'))
-    disableConcurrentBuilds()
-    skipDefaultCheckout(true)
-    timestamps()
-    timeout(time: 45, unit: 'MINUTES')
-  }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+        disableConcurrentBuilds()
+        skipDefaultCheckout(true)
+        timestamps()
+        timeout(time: 45, unit: 'MINUTES')
+    }
+
+    parameters {
+        string(
+            name: 'MANUAL_SOURCE_BRANCH',
+            defaultValue: 'master',
+            description: 'Branch to check out for manual builds.'
+        )
+    }
 
   parameters {
     string(
