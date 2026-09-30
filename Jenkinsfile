@@ -2,7 +2,7 @@ pipeline {
   agent { label 'linux-docker' }
 
   triggers {
-    gitlab(
+    githubPush(
       triggerOnPush: true,
       triggerOnMergeRequest: true,
       branchFilterType: 'All'
